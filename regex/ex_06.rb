@@ -4,11 +4,21 @@ regex = [/[abc][12]/]
 
 regex.each do |reg|
    strings.each do |txt|
-     p "found match for #{txt} and #{reg}" if txt.match(reg)
-     p "No match for #{txt} and #{reg}" if !txt.match(reg)
+     p reg
+     puts "text: #{txt}  "
+     p txt.scan(reg)
+     puts
   end
 end
 
-# "found match for a2 and (?-mix:[abc][12])"
-# "found match for Model 640c1 and (?-mix:[abc][12])"
-# "found match for a1 a2 a3 b1 b2 b3 c1 c2 c3 d1 d2 d3 and (?-mix:[abc][12])"
+# /[abc][12]/
+# text: a2
+# ["a2"]
+
+# /[abc][12]/
+# text: Model 640c1
+# ["c1"]
+
+# /[abc][12]/
+# text: a1 a2 a3 b1 b2 b3 c1 c2 c3 d1 d2 d3
+# ["a1", "a2", "b1", "b2", "c1", "c2"]
