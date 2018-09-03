@@ -51,6 +51,7 @@ class TodoList
       puts e.message + ". #{to_do} is not a Todo object"
   end
 
+  alias_method :<<, :add
   private
 
   attr_accessor :todos
@@ -73,12 +74,12 @@ list = TodoList.new("Today's Todos")
 # add
 list.add(todo1)                 # adds todo1 to end of list, returns list
 list.add(todo2)                 # adds todo2 to end of list, returns list
-list.add(todo3)                 # adds todo3 to end of list, returns list
+#list.add(todo3)                 # adds todo3 to end of list, returns list
 list.add(1)                     # raises TypeError with message "Can only add Todo objects"
 
 # <<
 # same behavior as add
-
+list << todo3
 # ---- Interrogating the list -----
 
 # size
