@@ -104,7 +104,7 @@ class TodoList
     text
   end
 
-  def each(&block)
+  def each
     counter = 0
     while counter < @todos.size
       yield(@todos[counter])
