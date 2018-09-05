@@ -124,43 +124,41 @@ class TodoList
     @todos.each do |todo|
       selected << todo if yield(todo)
     end
-    binding.pry
     selected
   end
 
   def find_by_title(todo_title)
     # returns the first Todo object that matches the argument
-    binding.pry
-    self.select { |todo| todo.title == todo_title}.first
+    select { |todo| todo.title == todo_title}.first
   end
 
   def all_done
     # returns new TodoList object containing only the done items
-    self.select { |todo| todo.done? }
+    select { |todo| todo.done? }
   end
 
   def all_not_done
     # returns new TodoList object containing only the not done items
-    self.select { |todo| !todo.done? }
+    select { |todo| !todo.done? }
   end
 
   def mark_done(todo_title)
     # takes a string as argument, and marks the first Todo object that
     # matches the argument as done.
-    to_mark = self.find_by_title(todo_title)
+    to_mark = find_by_title(todo_title)
     to_mark.done!
   end
 
   def mark_all_done
     # mark every todo as done
-    self.each do |todo|
+    each do |todo|
       todo.done!
     end
   end
 
   def mark_all_undone
     # mark every todo as not done
-    self.each do |todo|
+    each do |todo|
       todo.undone!
     end
   end
