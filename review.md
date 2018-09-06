@@ -64,3 +64,5 @@ From: /home/ec2-user/environment/temp.rb @ line 14 :
 [1] pry(main)> name
 => "Griffin III"
 ```
+
+# blocks summery 01-16
