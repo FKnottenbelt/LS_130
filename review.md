@@ -66,3 +66,8 @@ From: /home/ec2-user/environment/temp.rb @ line 14 :
 ```
 
 # blocks summery 01-16
+
+# Anki cards
+No {}!  => don't understand
+possible discussion &block usage
+Question • Jeremy Stryer 
