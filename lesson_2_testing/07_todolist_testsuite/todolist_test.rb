@@ -92,6 +92,37 @@ class TodoListTest < MiniTest::Test
     assert_raises(IndexError){ @list.item_at(300) }
     assert_same(@todo1, @list.first)
   end
+
+  def test_mark_done_at
+    assert_raises(IndexError){ @list.mark_done_at(300) }
+    @list.mark_done_at(0)
+    assert_equal(true, @todo1.done?)
+    assert_equal(false, @todo2.done?)
+    assert_equal(false, @todo3.done?)
+  end
+
+  def test_mark_undone_at
+    assert_raises(IndexError){ @list.mark_undone_at(300) }
+    @todo1.done!
+    @todo2.done!
+    @todo3.done!
+
+    @list.mark_undone_at(1)
+
+    assert_equal(true, @todo1.done?)
+    assert_equal(false, @todo2.done?)
+    assert_equal(true, @todo3.done?)
+  end
+
+  def test_done_bang
+    @list.done!
+    assert_equal(true, @todo1.done?)
+    assert_equal(true, @todo2.done?)
+    assert_equal(true, @todo3.done?)
+    assert_equal(true, @list.done?)
+  end
 end
+
+
 
 
