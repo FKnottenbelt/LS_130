@@ -70,3 +70,8 @@ From: /home/ec2-user/environment/temp.rb @ line 14 :
 # passing blocks
 anki cards on procs
 01-15, 01-04, 01-f1, onderzoek.rb
+
+# testing
+Is it wise to use custom methods to test other custom methods?
+should we use .instance_variable_get instead to get at the inner
+variable?
