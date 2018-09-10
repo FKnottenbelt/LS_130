@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'minitest/autorun'
 require "minitest/reporters"
 Minitest::Reporters.use!
@@ -128,6 +131,69 @@ class TodoListTest < MiniTest::Test
     assert_equal(2, @list.size)
     assert_equal([@todo2, @todo3], @list.to_a)
   end
+  def test_each_iterates
+    items = []
+    @list.each { |todo| items << todo }
+
+    assert_equal(@list.to_a, items)
+  end
+
+  def test_each_returns_original_list
+    original = @list
+    result = original.each { |todo| nil }
+
+    assert_equal(@list, result)
+  end
+
+  def test_select
+    @todo1.done!
+    result = @list.select{ |todo| todo.done == false }
+
+    refute_equal(@list.to_a, result)
+  end
+
+  def test_select_ls_version
+    @todo1.done!
+    list = TodoList.new(@list.title)
+    list.add(@todo1)
+
+    assert_equal(list.title, @list.title)
+    assert_equal(list.to_s, @list.select{ |todo| todo.done? }.to_s)
+  end
+
+  def test_find_by_title
+    found = @list.find_by_title("Clean room")
+    assert_equal(@todo2, found)
+  end
+
+  def test_all_done
+    @list.done!
+    assert_equal(@list.to_a, @list.all_done.to_a)
+  end
+
+  def test_all_not_done
+    @list.mark_all_undone
+    assert_equal(@list.to_a, @list.all_not_done.to_a)
+  end
+
+  def test_mark_done
+    @list.mark_done("Buy milk")
+    assert_equal(true, @todo1.done)
+    assert_equal(false, @todo2.done)
+    assert_equal(false, @todo3.done)
+  end
+
+  def test_mark_all_done
+    @list.mark_all_done
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
 
   def test_to_s
     # using a HEREDOC
@@ -167,33 +233,4 @@ class TodoListTest < MiniTest::Test
     assert_equal(output, @list.to_s)
   end
 
-  def test_each_iterates
-    items = []
-    @list.each { |todo| items << todo }
-
-    assert_equal(@list.to_a, items)
-  end
-
-  def test_each_returns_original_list
-    original = @list
-    result = original.each { |todo| nil }
-
-    assert_equal(@list, result)
-  end
-
-  def test_select
-    @todo1.done!
-    result = @list.select{ |todo| todo.done == false }
-
-    refute_equal(@list.to_a, result)
-  end
-
-  def test_select_ls_version
-    @todo1.done!
-    list = TodoList.new(@list.title)
-    list.add(@todo1)
-
-    assert_equal(list.title, @list.title)
-    assert_equal(list.to_s, @list.select{ |todo| todo.done? }.to_s)
-  end
 end
