@@ -67,7 +67,6 @@ From: /home/ec2-user/environment/temp.rb @ line 14 :
 
 # blocks summery 01-16
 
-# Anki cards
-No {}!  => don't understand
-possible discussion &block usage
-Question • Jeremy Stryer 
+# passing blocks
+anki cards on procs
+01-15, 01-04, 01-f1, onderzoek.rb
