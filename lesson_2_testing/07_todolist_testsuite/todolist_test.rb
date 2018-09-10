@@ -121,8 +121,63 @@ class TodoListTest < MiniTest::Test
     assert_equal(true, @todo3.done?)
     assert_equal(true, @list.done?)
   end
+
+  def test_remove_at
+    assert_raises(IndexError) { @list.remove_at(300) }
+    assert_equal(@todo1, @list.remove_at(0))
+    assert_equal(2, @list.size)
+    assert_equal([@todo2, @todo3], @list.to_a)
+  end
+
+  def test_to_s
+    # using a HEREDOC
+    # or: output = <<-OUTPUT.chomp.gsub /^\s+/, "" etc
+    # to remove preceding spaces
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [ ] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_one_done
+    @todo1.done!
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [ ] Clean room
+    [ ] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_to_s_all_done
+    @list.done!
+    output = <<~OUTPUT.chomp
+    ---- Today's Todos ----
+    [X] Buy milk
+    [X] Clean room
+    [X] Go to gym
+    OUTPUT
+
+    assert_equal(output, @list.to_s)
+  end
+
+  def test_each_iterates
+    items = []
+    @list.each { |todo| items << todo }
+
+    assert_equal(@list.to_a, items)
+  end
+
+  def test_each_returns_original_list
+    original = @list
+    result = original.each { |todo| nil }
+
+    assert_equal(@list, result)
+  end
 end
-
-
-
-

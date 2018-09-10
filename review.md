@@ -6,7 +6,7 @@
 # block variable scope
 01-14
 
-? how to I see (in pry) what the bindings of a proc
+how to I see (in pry) what the bindings of a proc
 are? Can I inspect it somehow? yep:
 ```ruby
 def call_me(some_code)
@@ -69,9 +69,12 @@ From: /home/ec2-user/environment/temp.rb @ line 14 :
 
 # passing blocks
 anki cards on procs
-01-15, 01-04, 01-f1, onderzoek.rb
+01-15, 01-04, 01-f1, block_notes
 
-# testing
+# testing  (?)
 Is it wise to use custom methods to test other custom methods?
 should we use .instance_variable_get instead to get at the inner
 variable?
+
+# HEREDOC (?)
+squiggly heredoc to remove preceding spaces ?
