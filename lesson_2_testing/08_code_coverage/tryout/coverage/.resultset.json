@@ -1,0 +1,37 @@
+{
+  "MiniTest": {
+    "coverage": {
+      "/home/ec2-user/130/lesson_2_testing/08_code_coverage/tryout/code.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        2,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1536648243
+  }
+}
