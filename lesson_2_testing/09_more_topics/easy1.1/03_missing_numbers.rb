@@ -48,12 +48,4 @@ collection, and iterates through each sequence of n consecutive items.
 We use each_cons here for just such an operation, taking 2-number
 sequences from array. The block simply generates the list of numbers
 between each pair of numbers, and appends them to the result array.
-
-
-Further Exploration
-
-Can you find other ways to solve this problem? What methods might
-prove useful? Can you find a way to solve this without using
-a method that requires a block?
 =end
-
