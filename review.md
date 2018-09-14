@@ -83,3 +83,5 @@ squiggly heredoc to remove preceding spaces ?
 run rubocop on lots of block exercises and versions of
 todolist
 
+# Sets
+Sets? ~/130/lesson_2_testing/09_more_topics/easy2/03_map.rb
