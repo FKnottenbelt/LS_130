@@ -78,3 +78,8 @@ variable?
 
 # HEREDOC (?)
 squiggly heredoc to remove preceding spaces ?
+
+# rubocop
+run rubocop on lots of block exercises and versions of
+todolist
+
