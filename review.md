@@ -86,3 +86,7 @@ todolist
 # Sets
 Sets? ~/130/lesson_2_testing/09_more_topics/easy2/03_map.rb
 http://ruby-doc.org/stdlib-2.4.0/libdoc/set/rdoc/Set.html
+
+# smalls
+~/130/lesson_2_testing/09_more_topics/easy2/05_drop_while.rb (go for performance)
+
