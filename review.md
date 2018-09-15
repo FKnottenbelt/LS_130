@@ -89,4 +89,9 @@ http://ruby-doc.org/stdlib-2.4.0/libdoc/set/rdoc/Set.html
 
 # smalls
 ~/130/lesson_2_testing/09_more_topics/easy2/05_drop_while.rb (go for performance)
+~/130/lesson_2_testing/09_more_topics/easy2/07_each_with_object.rb
 
+# code
+probably try writing at least one `each` etc for hash and set?
+(see sets)
+see also ~/130/lesson_2_testing/09_more_topics/easy2/07_each_with_object.rb
