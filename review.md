@@ -94,7 +94,7 @@ http://ruby-doc.org/stdlib-2.4.0/libdoc/set/rdoc/Set.html
 ~/130/lesson_2_testing/09_more_topics/easy2/10_each_cons2.rb
 ~/130/lesson_2_testing/09_more_topics/medium1/02_text_analyser.rb
 ~/130/lesson_2_testing/09_more_topics/medium1/04_passing_parameters2.rb
-
+~/130/lesson_2_testing/09_more_topics/medium1/05_passing_parameter3.rb
 
 # code
 probably try writing at least one `each` etc for hash and set?
@@ -103,3 +103,6 @@ see also ~/130/lesson_2_testing/09_more_topics/easy2/07_each_with_object.rb
 
 # testing: assertion syntax (more variation then in lessons)
 ~/130/lesson_2_testing/09_more_topics/easy_testing
+
+# ?
+~/130/lesson_2_testing/09_more_topics/medium1/06_method_to_proc.rb
