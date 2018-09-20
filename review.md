@@ -107,3 +107,11 @@ see also ~/130/lesson_2_testing/09_more_topics/easy2/07_each_with_object.rb
 
 # ?
 ~/130/lesson_2_testing/09_more_topics/medium1/06_method_to_proc.rb
+
+# testing user input
+using StringIO for $stdin
+~/130/lesson_2_testing/09_more_topics/medium2_testing/06_transaction_payment_prompt.rb
+
+# testing output strings
+~/130/lesson_2_testing/09_more_topics/medium2_testing/05_register_give_receipt.rb
+see also HEREDOC
