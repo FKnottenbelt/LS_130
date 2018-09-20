@@ -14,11 +14,17 @@ class CashRegisterTest < MiniTest::Test
   end
 
   def test_accept_money
+    @transaction.amount_paid = 20
     assert_equal(120, @register.accept_money(@transaction))
+  end
+
+  def test_change
+    @transaction.amount_paid = 55
+    assert_equal(5, @register.change(@transaction))
   end
 end
 
-# answer is different. need to do amount_paid?
+
 
 # ls solution
 
