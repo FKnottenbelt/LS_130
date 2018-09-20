@@ -10,7 +10,7 @@ class CashRegister
   end
 
   def give_receipt(transaction)
-    puts "You've paid $#{transaction.item_cost}."
+    puts "You have paid $#{transaction.item_cost}."
   end
 
   def accept_money(transaction)
