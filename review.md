@@ -75,6 +75,7 @@ anki cards on procs
 Is it wise to use custom methods to test other custom methods?
 should we use .instance_variable_get instead to get at the inner
 variable?
+And do we test inside the method or just return values? (~/130/lesson_2_testing/09_more_topics/medium2_testing/02_setup_test_cash_register.rb)
 
 # HEREDOC (?)
 squiggly heredoc to remove preceding spaces ?
