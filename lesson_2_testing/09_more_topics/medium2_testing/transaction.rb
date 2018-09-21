@@ -1,3 +1,4 @@
+require 'pry'
 class Transaction
   attr_reader :item_cost
   attr_accessor :amount_paid
@@ -44,3 +45,7 @@ end
 # t.prompt_for_payment   # calls on user
 # t.prompt_for_payment(input: input)
 # p t.amount_paid
+
+# t = Transaction.new(50)
+# input = StringIO.new("20\n50")
+# t.prompt_for_payment(input: input)

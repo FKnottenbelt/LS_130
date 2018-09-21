@@ -96,6 +96,7 @@ http://ruby-doc.org/stdlib-2.4.0/libdoc/set/rdoc/Set.html
 ~/130/lesson_2_testing/09_more_topics/medium1/02_text_analyser.rb
 ~/130/lesson_2_testing/09_more_topics/medium1/04_passing_parameters2.rb
 ~/130/lesson_2_testing/09_more_topics/medium1/05_passing_parameter3.rb
+~/130/lesson_2_testing/09_more_topics/medium2_testing/06_transaction_payment_prompt.rb
 
 # code
 probably try writing at least one `each` etc for hash and set?
@@ -115,3 +116,4 @@ using StringIO for $stdin
 # testing output strings
 ~/130/lesson_2_testing/09_more_topics/medium2_testing/05_register_give_receipt.rb
 see also HEREDOC
+~/130/lesson_2_testing/09_more_topics/medium2_testing/06_transaction_payment_prompt.rb
