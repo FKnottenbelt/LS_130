@@ -117,3 +117,6 @@ using StringIO for $stdin
 ~/130/lesson_2_testing/09_more_topics/medium2_testing/05_register_give_receipt.rb
 see also HEREDOC
 ~/130/lesson_2_testing/09_more_topics/medium2_testing/06_transaction_payment_prompt.rb
+
+# Input & output in Ruby
+http://zetcode.com/lang/rubytutorial/io/
