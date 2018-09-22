@@ -18,8 +18,12 @@ class TextTest < MiniTest::Test
     assert_match(/pheretre/, @text.swap('a','e'))
   end
 
+  def test_word_count
+    assert_equal(72, @text.word_count)
+  end
+
   def teardown
-    # close file
     @file.close
+    puts "File has been closed: #{@file.closed?}"
   end
 end

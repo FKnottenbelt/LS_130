@@ -101,6 +101,7 @@ http://ruby-doc.org/stdlib-2.4.0/libdoc/set/rdoc/Set.html
 ~/130/lesson_2_testing/09_more_topics/medium1/04_passing_parameters2.rb
 ~/130/lesson_2_testing/09_more_topics/medium1/05_passing_parameter3.rb
 ~/130/lesson_2_testing/09_more_topics/medium2_testing/06_transaction_payment_prompt.rb
+basically all medium2_testing are good reminder excerises
 
 # code
 probably try writing at least one `each` etc for hash and set?
