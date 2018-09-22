@@ -77,6 +77,10 @@ should we use .instance_variable_get instead to get at the inner
 variable?
 And do we test inside the method or just return values? (~/130/lesson_2_testing/09_more_topics/medium2_testing/02_setup_test_cash_register.rb)
 
+Pete hanson: With blocks, test that your blocks are being invoked when
+they should be, and that the return values are being used the way you
+intend.
+
 # HEREDOC (?)
 squiggly heredoc to remove preceding spaces ?
 
@@ -120,3 +124,6 @@ see also HEREDOC
 
 # Input & output in Ruby
 http://zetcode.com/lang/rubytutorial/io/
+
+# rubocop
+get easy access to original rubocop file 120 (no changed ruby version?)
