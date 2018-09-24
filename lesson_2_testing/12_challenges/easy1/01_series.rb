@@ -38,3 +38,19 @@ class Series
 end
 
 #s = Series.new('01234')
+
+# ls tip:
+# each_cons(n).to_a
+
+class Series
+  attr_reader :digits
+
+  def initialize(digits)
+    @digits = digits.chars.map(&:to_i)
+  end
+
+  def slices(n)
+    raise ArgumentError if n > digits.size
+    digits.each_cons(n).to_a
+  end
+end
