@@ -128,3 +128,18 @@ http://zetcode.com/lang/rubytutorial/io/
 
 # rubocop
 get easy access to original rubocop file 120 (no changed ruby version?)
+
+# rubygems
+RubyGems, or Gems for short, are packages of code that you can
+download, install, and use in your Ruby programs or from the
+command line. The gem command manages your Gems.
+
+
+# Ruby version managers
+Ruby version managers are programs that let you install, manage,
+and use multiple versions of Ruby
+- if you need other features
+- if you work on multiple projects with different ruby versions
+There are two major ruby version managers in common use: RVM and
+rbenv
+
