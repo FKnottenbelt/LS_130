@@ -142,4 +142,4 @@ and use multiple versions of Ruby
 - if you work on multiple projects with different ruby versions
 There are two major ruby version managers in common use: RVM and
 rbenv
-
+see summery in book
