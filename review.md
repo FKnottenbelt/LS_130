@@ -146,3 +146,6 @@ see summery in book
 
 # challenges
 check out a video?
+
+# regex
+final excerises
