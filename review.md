@@ -143,3 +143,6 @@ and use multiple versions of Ruby
 There are two major ruby version managers in common use: RVM and
 rbenv
 see summery in book
+
+# challenges
+check out a video?
