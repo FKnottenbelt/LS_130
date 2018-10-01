@@ -142,10 +142,39 @@ and use multiple versions of Ruby
 - if you work on multiple projects with different ruby versions
 There are two major ruby version managers in common use: RVM and
 rbenv
-see summery in book
+see summary in book
 
 # challenges
 check out a video?
 
 # regex
 final excerises
+
+# Bundler
+Dealing with dependencies -- multiple versions of Ruby and
+multiple versions of Gems -- is a significant issue in Ruby.
+dependency issues arise in all languages.
+
+You can also use your version manager to manage Gem dependencies,
+but the favored approach is to use a dependency manager.
+
+The most widely used dependency manager in the Ruby community,
+by far, is the Bundler Gem. This Gem lets you configure
+which Ruby and which Gems each of your projects need.
+
+If you use a Ruby version manager, you must install the Gem in
+each version of Ruby for which you wish to use Bundler.
+
+After you create `Gemfile`, the `bundle install` command scans it,
+downloads and installs all the dependencies listed, and produces
+a `Gemfile.lock` file. Gemfile.lock shows all the dependencies
+for your program
+
+Once Bundler creates your Gemfile.lock, add:
+```
+require 'bundler/setup'
+```
+to the beginning of your app, before any other Gems. (This is
+unneeded if your app is a Rails app).
+
+also see summary in book
