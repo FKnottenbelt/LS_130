@@ -178,3 +178,21 @@ to the beginning of your app, before any other Gems. (This is
 unneeded if your app is a Rails app).
 
 also see summary in book
+
+# Rake
+Rake is a Rubygem that automates many common functions required
+to build, test, package, and install programs; it is part of every
+modern Ruby installation, so you don't need to install it yourself.
+
+In short, you can write Rake tasks to automate anything you may
+want to do with your application during the development, testing,
+and release cycles.
+
+The main issue you will have with Rake is when to use bundle exec:
+sometimes you need to use bundle exec, sometimes you don't, and
+sometimes you can't use it. Generally, if your project uses Bundler
+(i.e., you have a Gemfile), use bundle exec; if your project
+doesn't use Bundler, you can omit bundle exec and just use rake.
+
+# ruby core tools
+chapter 'relationships'
