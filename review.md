@@ -196,3 +196,4 @@ doesn't use Bundler, you can omit bundle exec and just use rake.
 
 # ruby core tools
 chapter 'relationships'
+see ~/130_tekst/03_07_tools_summary.md
