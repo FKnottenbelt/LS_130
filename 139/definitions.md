@@ -1,15 +1,53 @@
 # Blocks
 
 ## Blocks: Closures and scope
-
 A `closure` is a general programming concept that allows programmers to
 save a "chunk of code" and execute it at a later time. They are a way to
 pass around an unnamed "chunk of code" to be executed later.
 
-There are three main ways to work with closures in Ruby (or `Proc object`):
+There are three main ways to work with closures in Ruby:
 1. Instantiating an object from the Proc classes
 2. Using lambdas
 3. Using blocks
+
+But because closures can be executed anywhere they are passed to, Ruby has to
+keep track of referencs to its surrounding artifacts (ie, variables,
+methods, objects, etc) in the outer scope at the moment of the definition
+of the closure. We call this the `binding` of the closure.
+So the scope of a closure is contained in its `binding` and that is
+everything that the block of code can access that is defined somewhere
+other than the block.
+
+We can see this in action when looking at the following code:
+```ruby
+def call_me(some_code)
+  some_code.call
+end
+
+name = "Robert"
+chunk_of_code = Proc.new {puts "hi #{name}"}
+name = "Griffin III"
+
+call_me(chunk_of_code)
+```
+On `line 6` a proc (closure) is defined and assigned to the local
+variable `chunk_of_code`. Ruby applies block scoping rules and 'packs'
+all the in scope artifacts into the binding. NB. it packs references to
+the variables, not the values.
+When the proc is called in `line 2` and the code in the block is executed,
+we see that the `puts method` does do indeed reference the current value
+of the variable `name` and outputs `"Griffin III"`
+
+> TODO: find quizz question blue to show what happens if it's out of
+scope ?
+
+## How blocks work, and when we want to use them.
+
+about passing blocks, yielding to them
+and defering and sandwiching
+
+## Blocks and variable scope
+block scope (109) and bindings. overlaps with closure scope?
 
 All normal rules for blocks and scope apply (short version:
 Blocks define a separate scope from the main program which can be
@@ -17,76 +55,58 @@ thought of as an inner scope. Variables initialized in an outer
 scope can be accessed in an inner scope; however, variables
 initialized in an inner scope cannot be accessed in an outer scope.)
 
-But because closures can be executed anywhere they are passed to, Ruby has to
-keep track of referencs to the variables in the outer scope at the moment
-of the definition of the closure. We call this the binding of the closure.
-So the scope of a closure is contained in its `binding` and that is
-everything that the block of code can access that is defined somewhere
-other than the block.
+## Write methods that use blocks and procs
+implicit blocks and explicit blocks
+testing for block with Kernel#block_given?
+yielding and calling
+returning to method
 
-We can see this in action when looking at the following code:
-```ruby
-require 'pry'
+sandwich and defering example
 
-message = 'nice to see you'
+## Methods with an explicit block parameter
+eh, repeat above? maybe talk about how it's converted to a proc
+and you can call it or pass it on
+additional flexibility.
+making an implicit block a proc with Proc.new?
 
-def call_me(some_code)
-  binding.pry
-  some_code.call
-end
+## Arguments and return values with blocks
+to many, to little arguments
+splat operators and block arguments
+return values? get used? (figure out what ls means)
 
-message = 'goodbye'
-name = "Robert"
-chunk_of_code = Proc.new {puts "hi #{name}, #{message}"}
-name = "Griffin III"
 
-call_me(chunk_of_code)
-message = 'call you soon'
-```
-On line 11 a proc (closure) is defined and assigned to the local
-variable `chunk_of_code`. Ruby applies block scoping rules and 'packs'
-all the in scope variables into the binding. NB. it packs references to
-the variables, not the values.
-If we examine the proc just before it is called in line 34 by going
-into pry and calling pry on the proc, we get to see the definition of
-the proc and if we then ask pry for the values of `name` and
-`message` we see that they do indeed reference the current value of
-these variables:
 
-```ruby
-    11: def call_me(some_code)
-    12:   binding.pry
- => 13:   some_code.call
-    14: end
 
-[1] pry(main)> some_code.pry
-```
-```ruby
-From: /home/ec2-user/environment/temp.rb @ line 18 :
+    Blocks can take arguments, just like normal methods. But unlike normal methods, it won’t complain about wrong number of arguments passed to it.
 
-    13:   some_code.call
-    14: end
-    15:
-    16: message = 'goodbye'
-    17: name = "Robert"
- => 18: chunk_of_code = Proc.new {puts "hi #{name}, #{message}"}
-    19: name = "Griffin III"
-    20:
-    21: call_me(chunk_of_code)
-    22: message = 'call you soon'
+    Blocks return a value, just like normal methods.
 
-[1] pry(main)> name
-=> "Griffin III"
-[2] pry(main)> message
-=> "goodbye"
-[3] pry(main)> exit-program
-```
+    When we yield, we have to be aware of the block’s return value.
 
-## How blocks work, and when we want to use them.
+## When can you pass a block to a method
+eh.. always?
 
-about passing blocks, yielding to them
-and defering and sandwiching
+In Ruby, every method can take an optional block as an implicit parameter. You can just tack it on at the end of the method invocation.
 
+## &:symbol
+calling next thing to proc. converting into block
+full form vs short form
+
+
+# Testing With Minitest
+
+    Testing terminology
+    Minitest vs. RSpec
+    SEAT approach
+    Assertions
+
+# Core Tools/Packaging Code
+
+    Purpose of core tools
+    Gemfiles
+# Regular Expressions
+
+# The Coding Challenge
 ===
 block local variable
 This is a special type of local variable where the scope is
@@ -119,13 +139,6 @@ blocks are a way to defer some implementation decisions to method invocation tim
 blocks are a good use case for "sandwich code" scenarios, like closing a File automatically.
 ===
 
-
-    Blocks and variable scope
-    Write methods that use blocks and procs
-    Methods with an explicit block parameter
-    Arguments and return values with blocks
-    When can you pass a block to a method
-    &:symbol
 
 == Anki voor vb
 How does ruby pass blocks that are passed in?
