@@ -43,8 +43,140 @@ scope ?
 
 ## How blocks work, and when we want to use them.
 
-about passing blocks, yielding to them
-and defering and sandwiching
+Blocks are chunks of code you put inside `do` and `end` pair or inside a
+`{ ... }` following a method invocation.
+```ruby
+def my_method   # <== block passed implicitly
+  puts "minding my own business and ignoring any blocks"
+end
+
+my_method{ puts 'hi' }  # <== method invocation with block
+
+# => "minding my own business and ignoring any blocks"
+```
+Blocks gets passed to the method of whose invocation they are part of.
+They can be passed implicity or explicitly
+```ruby
+def my_method(&block)   # <== block passed explicitly
+  puts "minding my own business and ignoring any blocks"
+end
+
+my_method{ puts 'hi' }  # <== method invocation with block
+
+# => "minding my own business and ignoring any blocks"
+```
+
+If you want to do something with the block that was passed in implicitly
+you can yield to it (it is good practice to check if a block was indeed
+passed in by calling Kernel#block_given?).
+When you yield to the block, the code in the block is executed and after
+the block is finished executing, control is returned to the method:
+
+```ruby
+def my_method   # <== block passed implicitly
+  yield if block_given?
+  puts "doing stuff after the block is finished executing"
+end
+
+my_method{ puts 'hi' }  # <== method invocation with block
+
+# => `hi`
+# => "doing stuff after the block is finished executing"
+```
+If you want to do something with a block that was passed explicitly,
+you have to call it (since the `&` in the method definition will turn it
+into a proc)
+```ruby
+def my_method(&block)   # <== block passed explicitly
+  block.call
+  puts "doing stuff after the block is finished executing"
+end
+
+my_method{ puts 'hi' }  # <== method invocation with block
+
+# => `hi`
+# => "doing stuff after the block is finished executing"
+```
+
+Blocks can take arguments and return a value, just like normal methods.
+```ruby
+[1, 2, 3].select { |num| num.even? }
+```
+When we yield, we can also pass arguments to the block and/or do
+something with the return value.
+```ruby
+def my_method
+  if block_given?
+    result = yield(4)
+    puts "the block should return true: #{result}"
+  end
+end
+
+my_method { |num| num.even? }
+
+# => "the block should return true: true"
+```
+But unlike normal methods, it won't complain about wrong number of
+arguments passed to it.
+```ruby
+def my_method
+  if block_given?
+    result = yield(4, 3, 7, 11, 13)   # ignoring extra arguments
+    puts "the block should still return true: #{result}"
+  end
+end
+
+my_method { |num| num.even? }
+
+# => "the block should still return true: true"
+```
+
+Blocks are one way that Ruby implements closures. Closures are a way
+to pass around an unnamed "chunk of code" to be executed later.
+
+Blocks are a way to defer some implementation decisions to method
+invocation time. It allows method callers to refine a method at
+invocation time for a specific use case. It allows method implementors
+to build generic methods that can be used in a variety of ways.
+```ruby
+def do_whatever(input)
+  yield(input)
+end
+
+do_whatever(0) { puts 'Oh you lazy programmer!' }
+do_whatever([1, 2, 3, 4, 5]) { |num| puts num }
+```
+
+Blocks are a good use case for "sandwich code" scenarios, like closing
+a File automatically.
+typical example for opening a file in Ruby is:
+```ruby
+class TextAnalyzer
+  def process
+    file = File.open('sample_text.txt', 'r')
+    yield(file.read)
+    file.close
+  end
+end
+
+analyzer = TextAnalyzer.new
+analyzer.process { |text| puts "#{text.split("\n\n").count} paragraphs" }
+```
+
+## variable scope an blocks (from 109)
+- A block cannot access variables defined in a peer scope
+- nested blocks:  blocks can be nested
+  - scope can bleed through blocks from out to in
+    – a variable initialized outside a block IS available inside the block
+    – a variable initialized inside a block IS NOT avaialble outside the block
+- `variable shadowing`: If a block takes a parameter, variable shadowing prevents
+  access to variables of the same name outside the block
+  ```ruby
+  n = 4
+  [1, 2, 3].each { |n| n + 1 }
+  ```
+- A do/end pair that does not follow a method invocation does not constitute
+  a block, so no nested scope is created
 
 ## Blocks and variable scope
 block scope (109) and bindings. overlaps with closure scope?
@@ -75,7 +207,7 @@ splat operators and block arguments
 return values? get used? (figure out what ls means)
 
 
-
+Methods and blocks will return the return value of their last evaluated statement.
 
     Blocks can take arguments, just like normal methods. But unlike normal methods, it won’t complain about wrong number of arguments passed to it.
 
@@ -128,24 +260,20 @@ with chunk_of_code.binding.local_variables
 ? see anki: concepts: explain local variable scope and blocks ?
 
 ==
-blocks are one way that Ruby implements closures. Closures are a way to pass around an unnamed "chunk of code" to be executed later.
-
-blocks can take arguments, just like normal methods. But unlike normal methods, it won't complain about wrong number of arguments passed to it.
-
-blocks return a value, just like normal methods.
-
-blocks are a way to defer some implementation decisions to method invocation time. It allows method callers to refine a method at invocation time for a specific use case. It allows method implementors to build generic methods that can be used in a variety of ways.
-
-blocks are a good use case for "sandwich code" scenarios, like closing a File automatically.
 ===
 
 
 == Anki voor vb
-How does ruby pass blocks that are passed in?
-Ruby passes blocks passed in as explicit blocks to a simple Proc object (this is why we need to use #call to invoke the Proc object).
-
-If the argument passed in is already a Proc object or a lambda, Ruby passes it to the method unchanged.
-
-If the argument passed in is neither a block nor a Proc, Ruby calls #to_proc on the object and passes the result to the method.
 
 ==
+
+> How does ruby pass blocks that are passed in?
+
+Ruby passes blocks passed in as explicit blocks to a simple Proc
+object (this is why we need to use #call to invoke the Proc object).
+
+If the argument passed in is already a Proc object or a lambda, Ruby
+passes it to the method unchanged.
+
+If the argument passed in is neither a block nor a Proc, Ruby calls
+#to_proc on the object and passes the result to the method.
