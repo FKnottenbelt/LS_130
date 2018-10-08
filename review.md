@@ -146,6 +146,7 @@ see summary in book
 
 # challenges
 check out a video?
+~/130/lesson_2_testing/12_challenges/easy1/10_roman_numerals.rb
 
 # regex
 final excerises
