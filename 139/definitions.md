@@ -129,6 +129,18 @@ end
 my_method { |num| num.even? }
 
 # => "the block should still return true: true"
+
+def my_method2
+  if block_given?
+    result = yield   # not enough arguments
+    puts "the block outputed an empty line"
+  end
+end
+
+my_method2 { |num| puts num }
+
+# =>
+# => "the block outputed an empty line"
 ```
 
 Blocks are one way that Ruby implements closures. Closures are a way
@@ -163,7 +175,9 @@ analyzer = TextAnalyzer.new
 analyzer.process { |text| puts "#{text.split("\n\n").count} paragraphs" }
 ```
 
-## variable scope an blocks (from 109)
+## Blocks and variable scope
+
+All normal rules that we learned in 101 for blocks and scope apply:
 - A block cannot access variables defined in a peer scope
 - nested blocks:  blocks can be nested
   - scope can bleed through blocks from out to in
@@ -178,14 +192,36 @@ analyzer.process { |text| puts "#{text.split("\n\n").count} paragraphs" }
 - A do/end pair that does not follow a method invocation does not constitute
   a block, so no nested scope is created
 
-## Blocks and variable scope
-block scope (109) and bindings. overlaps with closure scope?
+Since a block is how Ruby implements the idea of a closure and in order
+for this "chunk of code" to be executed later, it must understand
+the surrounding context from when it was initialized. To keep track of
+its surrounding context the closure drags its context around wherever the
+chunk of code is passed to. In Ruby, we call this its `binding`, or
+surrounding environment/context. This not only includes local variables,
+but also method references, constants and other artifacts. Whatever it
+needs to execute correctly, it will drag all of it around.
 
-All normal rules for blocks and scope apply (short version:
-Blocks define a separate scope from the main program which can be
-thought of as an inner scope. Variables initialized in an outer
-scope can be accessed in an inner scope; however, variables
-initialized in an inner scope cannot be accessed in an outer scope.)
+> fix tekst.. 
+
+normal block has seemlingly normal scope. if you save block you
+can really see closures at work. (since you can't change name after
+calling block...hard to see)
+```ruby
+def my_method
+  yield
+end
+
+name = 'Femke'
+my_method { puts name }
+saved_code = Proc.new{ puts name }
+name = 'Lisa'
+my_method(&saved_code)
+```
+It's why code like the above will work fine, seemingly violating the
+variable scoping rules we learned earlier.
+
+This is at the core of variable scoping rules in Ruby, and it's why
+"inner scopes can access outer scopes"
 
 ## Write methods that use blocks and procs
 implicit blocks and explicit blocks
