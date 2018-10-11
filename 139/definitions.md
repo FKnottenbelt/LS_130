@@ -177,6 +177,39 @@ analyzer.process { |text| puts "#{text.split("\n\n").count} paragraphs" }
 
 ## Blocks and variable scope
 
+Blocks define a separate scope from the main program which can be
+thought of as an inner scope. Variables initialized in an outer scope
+can be accessed in an inner scope; however, variables initialized in an
+inner scope cannot be accessed in an outer scope.
+
+Since a block is how Ruby implements the idea of a closure and in order
+for this "chunk of code" to be executed later, it must understand
+the surrounding context from when it was initialized. To keep track of
+its surrounding context the closure drags its context around wherever the
+chunk of code is passed to. In Ruby, we call this its `binding`. This not
+only includes local variables, but also method references, constants and
+other artifacts. Whatever it needs to execute correctly, it will drag all
+of it around.
+
+This is easier to see if you save the block as a proc:
+```ruby
+def my_method
+  yield
+end
+
+name = 'Femke'
+my_method { puts name }                   #  => Femke
+
+saved_code = Proc.new{ puts name }
+name = 'Lisa'
+
+my_method(&saved_code)                    #  => Lisa
+```
+This is at the core of variable scoping rules in Ruby, and it's why
+"inner scopes can access outer scopes"
+
+################ skip this?:
+
 All normal rules that we learned in 101 for blocks and scope apply:
 - A block cannot access variables defined in a peer scope
 - nested blocks:  blocks can be nested
@@ -192,36 +225,7 @@ All normal rules that we learned in 101 for blocks and scope apply:
 - A do/end pair that does not follow a method invocation does not constitute
   a block, so no nested scope is created
 
-Since a block is how Ruby implements the idea of a closure and in order
-for this "chunk of code" to be executed later, it must understand
-the surrounding context from when it was initialized. To keep track of
-its surrounding context the closure drags its context around wherever the
-chunk of code is passed to. In Ruby, we call this its `binding`, or
-surrounding environment/context. This not only includes local variables,
-but also method references, constants and other artifacts. Whatever it
-needs to execute correctly, it will drag all of it around.
-
-> fix tekst.. 
-
-normal block has seemlingly normal scope. if you save block you
-can really see closures at work. (since you can't change name after
-calling block...hard to see)
-```ruby
-def my_method
-  yield
-end
-
-name = 'Femke'
-my_method { puts name }
-saved_code = Proc.new{ puts name }
-name = 'Lisa'
-my_method(&saved_code)
-```
-It's why code like the above will work fine, seemingly violating the
-variable scoping rules we learned earlier.
-
-This is at the core of variable scoping rules in Ruby, and it's why
-"inner scopes can access outer scopes"
+################
 
 ## Write methods that use blocks and procs
 implicit blocks and explicit blocks
