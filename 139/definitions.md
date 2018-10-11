@@ -228,12 +228,52 @@ All normal rules that we learned in 101 for blocks and scope apply:
 ################
 
 ## Write methods that use blocks and procs
-implicit blocks and explicit blocks
-testing for block with Kernel#block_given?
-yielding and calling
-returning to method
+In Ruby any method can be passed to a block implicitly. The method
+can either ignore the block or yield to it. When yielding to the block
+the method can pass parameters to the block and use the return value
+of block in its code. After yielding to the block and excuting the
+code in the block, control will be returned to the method.
+```ruby
+def select(array)
+  counter = 0
+  selected = []
+  while counter < array.size
+    result = yield(array[counter])
+    selected << array[counter] if result
+    counter += 1
+  end
+  selected
+end
 
-sandwich and defering example
+array = [1, 2, 3, 4, 5]
+p select(array)
+p select(array) { |num| num.odd? }      # => [1, 3, 5]
+```
+You may use `Kernel#block_given?` to check if a block was passed in.
+Yielding when no block has been passed in will result in a
+`LocalJumpError: no block given`
+
+If you want to be able to do things like pass on your block to other
+methods from within your methods you could have your method accept
+the block explicitly by defining it as the last parameter in your
+parameter list and prepending a `&`. This will turn your block into
+a proc object that you can either call (to execute the code in the block)
+or treat like any other object and do do things like pass it to another
+method. Passing blocks in explicitly thus gives you even more
+flexibility.
+```ruby
+def echo(tekst)
+  print "echo: "
+  tekst.call
+end
+
+def alphabet(&block)
+  block.call
+  echo(block)
+end
+
+alphabet{ puts "xyz" }
+```
 
 ## Methods with an explicit block parameter
 eh, repeat above? maybe talk about how it's converted to a proc
