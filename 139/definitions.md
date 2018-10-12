@@ -103,7 +103,8 @@ Blocks can take arguments and return a value, just like normal methods.
 [1, 2, 3].select { |num| num.even? }
 ```
 When we yield, we can also pass arguments to the block and/or do
-something with the return value.
+something with the return value. (Methods and blocks will return the
+return value of their last evaluated statement.)
 ```ruby
 def my_method
   if block_given?
@@ -281,28 +282,40 @@ and you can call it or pass it on
 additional flexibility.
 making an implicit block a proc with Proc.new?
 
+
 ## Arguments and return values with blocks
-to many, to little arguments
+to many, to little arguments > see 'how blocks work'
 splat operators and block arguments
-return values? get used? (figure out what ls means)
+return values > see 'how blocks work'
 
-
-Methods and blocks will return the return value of their last evaluated statement.
-
-    Blocks can take arguments, just like normal methods. But unlike normal methods, it won’t complain about wrong number of arguments passed to it.
-
-    Blocks return a value, just like normal methods.
-
-    When we yield, we have to be aware of the block’s return value.
 
 ## When can you pass a block to a method
 eh.. always?
 
-In Ruby, every method can take an optional block as an implicit parameter. You can just tack it on at the end of the method invocation.
+In Ruby, every method can take an optional block as an implicit
+parameter. You can just tack it on at the end of the method invocation.
 
 ## &:symbol
-calling next thing to proc. converting into block
-full form vs short form
+
+A lone & applied to an object causes ruby to try to convert the object to
+a block. If that object is a proc, the conversion happens automatically.
+If the object is not a proc, then & attempts to call the #to_proc method
+on the object first. Used with symbols, e.g., &:to_s, Ruby creates a proc
+that calls the #to_s method on a passed object, and then converts that
+proc to a block. This is the "symbol to proc" operation calling next 
+thing to proc. converting into block
+
+Thus this code 
+```
+[1, 2, 3, 4, 5].map(&:to_s)     # turns the symbol into a Proc, then &
+                                # turns the Proc into a block      
+                                
+# => ["1", "2", "3", "4", "5"]
+```
+is the 'shortform' for:
+```
+[1, 2, 3, 4, 5].map { |nun| num.to_s }
+```
 
 
 # Testing With Minitest
