@@ -230,10 +230,12 @@ All normal rules that we learned in 101 for blocks and scope apply:
 
 ## Write methods that use blocks and procs
 In Ruby any method can be passed to a block implicitly. The method
-can either ignore the block or yield to it. When yielding to the block
+can either ignore the block or yield to it. The yield keyword tells
+Ruby to execute any block passed to the method during invocation. It
+causes execution to jump to the block, execute it, and then jump back
+to the method definition and continue on. When yielding to the block
 the method can pass parameters to the block and use the return value
-of block in its code. After yielding to the block and excuting the
-code in the block, control will be returned to the method.
+of block in its code.
 ```ruby
 def select(array)
   counter = 0
@@ -302,14 +304,14 @@ a block. If that object is a proc, the conversion happens automatically.
 If the object is not a proc, then & attempts to call the #to_proc method
 on the object first. Used with symbols, e.g., &:to_s, Ruby creates a proc
 that calls the #to_s method on a passed object, and then converts that
-proc to a block. This is the "symbol to proc" operation calling next 
+proc to a block. This is the "symbol to proc" operation calling next
 thing to proc. converting into block
 
-Thus this code 
+Thus this code
 ```
 [1, 2, 3, 4, 5].map(&:to_s)     # turns the symbol into a Proc, then &
-                                # turns the Proc into a block      
-                                
+                                # turns the Proc into a block
+
 # => ["1", "2", "3", "4", "5"]
 ```
 is the 'shortform' for:
@@ -320,14 +322,187 @@ is the 'shortform' for:
 
 # Testing With Minitest
 
-    Testing terminology
-    Minitest vs. RSpec
-    SEAT approach
-    Assertions
+## Testing terminology
+
+`Test Suite`: this is the entire set of tests that accompanies your program
+or application. You can think of this as all the tests for a project.
+
+`Test`: this describes a situation or context in which tests are run. For
+example, this test is about making sure you get an error message after
+trying to log in with the wrong password. A test can contain multiple
+assertions.
+
+`Assertion`: this is the actual verification step to confirm that the data
+returned by your program or application is indeed what is expected. You
+make one or more assertions within a test.
+
+## Minitest vs. RSpec
+Minitest is the default testing library that comes with Ruby and the code reads
+like normal ruby if we use with its assert-style syntax:
+```ruby
+require 'minitest/autorun'
+
+require_relative 'car'
+
+class CarTest < MiniTest::Test
+  def test_wheels
+    car = Car.new
+    assert_equal(4, car.wheels)
+  end
+end
+```
+We can also use Minitest wit a expectation style syntax, so it reads more like
+English:
+```ruby
+require 'minitest/autorun'
+
+require_relative 'car'
+
+describe 'Car#wheels' do
+  it 'has 4 wheels' do
+    car = Car.new
+    car.wheels.must_equal 4           # this is the expectation
+  end
+end
+```
+
+The RSpec gem is a DSL for writing test and its code reads more like natural
+English and looks a lot like Minitest expectation style syntax:
+```ruby
+require 'rspec/autorun'
+
+describe Factorial do
+  it "finds the factorial of 5" do
+    calculator = Factorial.new
+    expect(calculator.factorial_of(5)).to eq(120)
+  end
+end
+```
+
+## SEAT approach
+There there are usually 4 steps to writing a test. We call this the
+`SEAT` approacg:
+- **S**et up the necessary objects.
+- **E**xecute the code against the object we're testing.
+- **A**ssert the results of the execution.
+- **T**Tear down and clean up any lingering artifacts
+-
+```ruby
+class TextTest < MiniTest::Test
+  def setup                            # <= Setup
+    @file = File.open("starter_file.txt", 'r')
+    @text = Text.new(@file.read)
+  end
+
+  def test_word_count
+    assert_equal(72, @text.word_count) # <= Execute: .word_count &
+                                       # <= Assert
+  end
+
+  def teardown                         # <= Teardown
+    @file.close
+    puts "File has been closed: #{@file.closed?}"
+  end
+end
+```
+
+The setup method will be called before running every test, and
+the teardown method will be called after running every test.
+In the simplest cases, we won't need either set up or tear down.
+
+
+## Assertions
+The `Assertion`is the actual verification step to confirm that the data
+returned by your program or application is indeed what is expected. You
+make one or more assertions within a test.
+
+There are a lot of different assertions. Some of the most popular are:
+Assertion	| Description
+--------- | -----------
+`assert(test)` | Fails unless `test` is truthy.
+`assert_equal(exp, act)` |	Fails unless `exp == act`.
+`assert_nil(obj)`	| Fails unless `obj` is `nil`.
+`assert_raises(*exp) { ... }` |	Fails unless block raises one of `*exp`.
+`assert_instance_of(cls, obj)` |	Fails unless `obj` is an instance of `cls`.
+`assert_includes(collection, obj)` | Fails unless `collection` includes `obj`.
+
+example:
+```ruby
+class CarTest < Minitest::Test
+  def test_car_exists
+    car = Car.new
+    assert(car)
+  end
+
+  def test_wheels
+    car = Car.new
+    assert_equal(4, car.wheels)
+  end
+
+  def test_name_is_nil
+    car = Car.new
+    assert_nil(car.name)
+  end
+
+  def test_raise_initialize_with_arg
+    assert_raises(ArgumentError) do
+      car = Car.new(name: "Joey")
+    end
+  end
+
+  def test_instance_of_car
+    car = Car.new
+    assert_instance_of(Car, car)
+  end
+
+  def test_includes_car
+    car = Car.new
+    arr = [1, 2, 3]
+    arr << car
+
+    assert_includes(arr, car)
+  end
+
+end
+```
 
 # Core Tools/Packaging Code
 
-    Purpose of core tools
+## Purpose of core tools
+The core tools are common tools that help us to build a professional
+quality, ready for distribution Ruby project.
+
+> Rubygems
+
+RubyGems, often just called Gems, are packages of code that you can
+download, install, and use in your Ruby programs or from the command
+line. The gem command manages your Gems.
+Examples of gems are: rubocop, pry and rails
+
+> RVM and Rbenv
+
+Ruby version managers are programs that let you install, manage, and
+use multiple versions of Ruby. This is usefull:
+- if you need other features
+- if you work on multiple projects with different ruby versions
+The version managers not only let you manage multiple versions of Ruby,
+but also the utilities (such as irb) associated with each version, and
+the RubyGems installed for each Ruby. With version managers, you can
+install and uninstall ruby versions and gems, and run specific
+versions of ruby with specific programs and environments.
+
+There are two major ruby version managers in common use: RVM and
+rbenv. By default, RVM has more features, but rbenv plugins
+provide much of the functionality not provided by the base install
+of rbenv. RVM works by dynamically managing your environment, mostly
+by modifying your PATH variable and replacing the built-in cd
+command with an RVM-aware shell function; rbenv works by just
+modifying your PATH and some other environment variables.
+
+
+* Bundler
+* Rake
+
     Gemfiles
 # Regular Expressions
 
