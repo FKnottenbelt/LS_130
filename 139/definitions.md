@@ -499,11 +499,101 @@ by modifying your PATH variable and replacing the built-in cd
 command with an RVM-aware shell function; rbenv works by just
 modifying your PATH and some other environment variables.
 
+> Bundler
 
-* Bundler
-* Rake
+Bundler is a dependencies manager. It lets you describe exactly which
+Ruby and Gems you want to use with your Ruby apps. Specifically, it
+lets you install multiple versions of each Gem under a specific
+version of Ruby and then use the proper version in your app.
 
-    Gemfiles
+#### Gemfiles
+To use Bundler, you provide a file named Gemfile that describes
+the Ruby and Gem versions you want for your app. You use a DSL
+described on the Bundler website to provide this information.
+
+example of Gemfile:
+```
+source 'https://rubygems.org'
+
+ruby '2.3.1'
+gem 'sinatra'
+gem 'erubis'
+gem 'rack'
+gem 'rake', '~>10.4.0'
+```
+
+Bundler uses the Gemfile to generate a Gemfile.lock file via the
+bundle install command. Gemfile.lock describes the actual versions
+of each Gem that your app needs, including any Gems that the Gems
+listed in Gemfile depend on. The bundler/setup package tells your
+Ruby program to use Gemfile.lock to determine which Gem versions
+it should load.
+
+example of Gemfile.lock:
+```
+GEM
+  remote: https://RubyGems.org/
+  specs:
+    erubis (2.7.0)
+    rack (1.6.4)
+    rack-protection (1.5.3)
+      rack
+    rake (10.4.2)
+    sinatra (1.4.7)
+      rack (~> 1.5)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
+    tilt (2.0.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  erubis
+  rack
+  rake (~> 10.4.0)
+  sinatra
+
+RUBY VERSION
+   ruby 2.3.1p112
+
+BUNDLED WITH
+   1.13.6
+```
+
+> Rake
+
+Rake is a Rubygem that automates many common functions required
+to build, test, package, and install programs. With it you can write
+Rake tasks to automate anything you may want to do with your application
+during the development, testing, and release cycles.
+
+example:
+```ruby
+require "rake/testtask"
+require 'pathname'
+require 'find'
+require "bundler/gem_tasks"
+
+desc 'Run tests'
+task :default => :test
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList['test/**/*_test.rb']
+end
+
+desc 'Find not hidden files'
+task :find_file do
+  path_to_search = '.'
+  Find.find(path_to_search) do |file|
+    next if name.include?('/.')
+    puts file if File.file?(file)
+  end
+end
+```
+
 # Regular Expressions
 
 # The Coding Challenge
