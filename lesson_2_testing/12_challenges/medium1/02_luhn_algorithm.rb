@@ -81,6 +81,9 @@ create
 - get the checksum for the digits
 - new digit = 10 - last digit of checksum (or last if allready 0)
 - replace our first 0 with the new digit
+
+addends
+this are the digits in the checksum before we sum them
 =end
 
 
@@ -92,23 +95,13 @@ class Luhn
   end
 
   def addends
-
+    # return checksum digits before summing
+    self.class.calculate_checksum_digits(number.digits)
   end
 
   def checksum
-    digits = number.digits
-    self.class.calculate_checksum(digits)
-  end
-
-  def self.calculate_checksum(digits)
-    digits.map.with_index do |num, ind|
-      if ind.odd?
-        new_num = num * 2
-        new_num -= 9 if new_num > 10
-        num = new_num
-      end
-      num
-    end.sum
+   p digits = number.digits
+    self.class.calculate_checksum_digits(digits).sum
   end
 
   def valid?
@@ -119,13 +112,26 @@ class Luhn
     # makes the number valid by adding a digit
     digits = num.digits
     digits.unshift(0)
-    checksum = calculate_checksum(digits)
+    checksum = calculate_checksum_digits(digits).sum
 
     remainder, last = checksum.divmod(10)
     last != 0 ? (last = 10 - last) : last
 
     digits[0]= last
     digits.reverse.join.to_i
+  end
+
+  private
+
+  def self.calculate_checksum_digits(digits)
+    digits.map.with_index do |num, ind|
+      if ind.odd?
+        new_num = num * 2
+        new_num -= 9 if new_num > 10
+        num = new_num
+      end
+      num
+    end.reverse
   end
 end
 

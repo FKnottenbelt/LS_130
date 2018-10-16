@@ -3,13 +3,13 @@ require_relative '02_luhn_algorithm'
 
 class LuhnTest < Minitest::Test
   def test_addends
-    skip
+
     luhn = Luhn.new(12_121)
     assert_equal [1, 4, 1, 4, 1], luhn.addends
   end
 
   def test_too_large_addend
-    skip
+
     luhn = Luhn.new(8631)
     assert_equal [7, 6, 6, 1], luhn.addends
   end
