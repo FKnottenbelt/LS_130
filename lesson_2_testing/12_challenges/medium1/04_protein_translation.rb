@@ -107,3 +107,79 @@ class Translation
     !codon.match(/[^ACGU]/)
   end
 end
+
+# top solutions
+class InvalidCodonError < StandardError
+end
+#
+module Translation
+  CODON_PROTEIN = {
+    'AUG' => 'Methionine',    'UUU' => 'Phenylalanine',
+    'UUC' => 'Phenylalanine', 'UUA' => 'Leucine',
+    'UUG' => 'Leucine',       'UCU' => 'Serine',
+    'UCC' => 'Serine',        'UCA' => 'Serine',
+    'UCG' => 'Serine',        'UAU' => 'Tyrosine',
+    'UAC' => 'Tyrosine',      'UGU' => 'Cystine',
+    'UGC' => 'Cystine',       'UGG' => 'Tryptophan',
+    'UAA' => 'STOP',          'UAG' => 'STOP',
+    'UGA' => 'STOP'
+  }
+
+  def self.of_codon(codon)
+    CODON_PROTEIN.fetch(codon) { fail InvalidCodonError }
+  end
+
+  def self.of_rna(strand)
+    strand.scan(/.../).take_while { |codon| of_codon(codon) != 'STOP' }
+                      .map { |codon| of_codon(codon) }
+  end
+end
+
+class InvalidCodonError < StandardError; end
+
+class Translation
+  CODONS = {
+    'AUG' => 'Methionine',
+    'UGG' => 'Tryptophan',
+    'UUU' => 'Phenylalanine', 'UUC' => 'Phenylalanine',
+    'UAU' => 'Tyrosine',      'UAC' => 'Tyrosine',
+    'UGU' => 'Cysteine',      'UGC' => 'Cysteine',
+    'UUA' => 'Leucine',       'UUG' => 'Leucine',
+    'UCU' => 'Serine',        'UCC' => 'Serine',
+    'UCA' => 'Serine',        'UCG' => 'Serine',
+    'UAA' => 'STOP',          'UAG' => 'STOP',
+    'UGA' => 'STOP'
+  }
+
+  def self.of_codon(codon)
+    CODONS.fetch(codon) { fail InvalidCodonError }
+  end
+
+  def self.of_rna(strand)
+    codons = strand.scan(/.{3}/)
+    codons.each_with_object([]) do |codon, rna|
+      return rna if of_codon(codon) == 'STOP'
+      rna << of_codon(codon)
+    end
+  end
+end
+
+class Translation
+  PROTEIN_CODON = { "Methionine" => ["AUG"], "Phenylalanine" => ["UUU", "UUC"], "Leucine" => ["UUA", "UUG"],
+                    "Serine" => ["UCU", "UCC", "UCA", "UCG"], "Tyrosine" => ["UAU", "UAC"],
+                    "Cysteine" => ["UGU", "UGC"], "Tryptophan" => ["UGG"], "STOP" => ["UAA", "UAG", "UGA"]}
+
+  def self.of_codon(codon)
+    PROTEIN_CODON.select { |protein, codons| codons.include?(codon) }.keys.first
+  end
+
+  def self.of_rna(strand)
+    strand.slice(0..8).scan(/.{3}/).take_while { |codon| !PROTEIN_CODON["STOP"].include?(codon) }.map do |codon|
+      raise InvalidCodonError unless PROTEIN_CODON.values.flatten.include?(codon)
+      of_codon(codon)
+    end
+  end
+end
+
+class InvalidCodonError < StandardError
+end
