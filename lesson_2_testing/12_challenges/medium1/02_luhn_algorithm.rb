@@ -11,7 +11,7 @@ number must pass the following test:
     left, double the value of every second digit.
     For any digits that thus become 10 or more, subtract 9 from the result.
         1111 becomes 2121.
-        8763 becomes 7733 (from 2×6=12 → 12-9=3 and 2×8=16 → 16-9=7).
+        8763 becomes 7733 (from 2x6=12 -> 12-9=3 and 2x8=16 -> 16-9=7).
     Add all these digits together.
         1111 becomes 2121 sums as 2+1+2+1 to give a checksum of 6.
         8763 becomes 7733, and 7+7+3+3 is 20.
@@ -86,7 +86,6 @@ addends
 this are the digits in the checksum before we sum them
 =end
 
-
 class Luhn
   attr_reader :number
 
@@ -112,14 +111,12 @@ class Luhn
     digits.unshift(0)
     checksum = calculate_checksum_digits(digits).sum
 
-    remainder, last = checksum.divmod(10)
+    _, last = checksum.divmod(10)
     last != 0 ? (last = 10 - last) : last
 
-    digits[0]= last
+    digits[0] = last
     digits.reverse.join.to_i
   end
-
-  private
 
   def self.calculate_checksum_digits(digits)
     digits.map.with_index do |num, ind|
@@ -153,21 +150,21 @@ class Luhn
     end.reverse
   end
 
-  def checksum
-    addends.reduce(&:+)
-  end
+#   def checksum
+#     addends.reduce(&:+)
+#   end
 
-  def valid?
-    checksum % 10 == 0
-  end
+#   def valid?
+#     checksum % 10 == 0
+#   end
 
-  def self.create(number)
-    new_base_number = number * 10
-    if new(new_base_number).valid?
-      new_base_number
-    else
-      luhn_remainder = new(new_base_number).checksum % 10
-      new_base_number + (10 - luhn_remainder)
-    end
-  end
-end
+#   def self.create(number)
+#     new_base_number = number * 10
+#     if new(new_base_number).valid?
+#       new_base_number
+#     else
+#       luhn_remainder = new(new_base_number).checksum % 10
+#       new_base_number + (10 - luhn_remainder)
+#     end
+#   end
+# end

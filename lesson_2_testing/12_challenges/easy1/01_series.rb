@@ -37,7 +37,7 @@ class Series
   end
 end
 
-#s = Series.new('01234')
+# s = Series.new('01234')
 
 # ls tip:
 # each_cons(n).to_a

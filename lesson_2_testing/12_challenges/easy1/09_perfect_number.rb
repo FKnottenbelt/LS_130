@@ -5,7 +5,7 @@ Perfect Number
 The Greek mathematician Nicomachus devised a classification scheme for
 natural numbers, identifying each as belonging uniquely to the categories
 of abundant, perfect, or deficient. A perfect number equals the sum of its
-positive divisors — the pairs of numbers whose product yields the target
+positive divisors - the pairs of numbers whose product yields the target
 number, excluding the number itself. This sum is known as the Aliquot sum.
 
     Perfect: Sum of factors = number

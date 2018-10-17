@@ -22,16 +22,15 @@ a: for each number in set
          if so then save
    sum saved numbers
 =end
-require 'pry'
 
 class SumOfMultiples
   attr_reader :set
 
   def initialize(*set)
-    @set = set == [] ? [3,5] : set
+    @set = set == [] ? [3, 5] : set
   end
 
-  def self.to(n, set = [3,5])
+  def self.to(n, set = [3, 5])
     multiples = []
     set.each do |setnumber|
       multiples << find_multiples(setnumber, n)
@@ -45,23 +44,22 @@ class SumOfMultiples
 
   def self.find_multiples(setnumber, n)
     multiples = []
-    ((setnumber)...n).each do |num|
+    (setnumber...n).each do |num|
       multiples << num if num % setnumber == 0
     end
     multiples
   end
 end
 
-#s1 = SumOfMultiples.new(7, 13, 17)
-#p s1.set
-#s2 = SumOfMultiples.new
-#p s2.set
+# s1 = SumOfMultiples.new(7, 13, 17)
+# p s1.set
+# s2 = SumOfMultiples.new
+# p s2.set
 # p s2.to(10) #== 23
 # p s1.to(20) #== 51
 # p SumOfMultiples.to(10)
 # p SumOfMultiples.new(7, 13, 17).to(20)
 # p SumOfMultiples.to(100) #2_318
-
 
 # top solutions
 class SumOfMultiples

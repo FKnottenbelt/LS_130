@@ -35,7 +35,7 @@ class Phrase
   end
 
   def word_count
-    count = Hash.new{0}
+    count = Hash.new{ 0 }
     words.each do |word|
       count[word] += 1
     end

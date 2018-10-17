@@ -48,15 +48,15 @@ class Octal
 
   def to_decimal
     octal.digits.map.with_index do |num, ind|
-      return 0 unless num.between?(0,7)
-      num * (8 ** ind)
+      return 0 unless num.between?(0, 7)
+      num * (8**ind)
     end.sum
   end
 end
 
-#p Octal.new('6789').to_decimal # 0
+# p Octal.new('6789').to_decimal # 0
 
-#NB:  if it's an octal constant, then the only valid digits are 0 though 7
+# NB:  if it's an octal constant, then the only valid digits are 0 though 7
 
 # top solutions
 class Octal

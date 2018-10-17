@@ -18,7 +18,6 @@ last is the 3's place, the third to last is the 9's place, etc.
 1*3^5 + 0*3^4 + 2*3^3 + 0*3^2 + 1*3^1 + 2*3^0    # the value
   243 +     0 +    54 +     0 +     3 +     2 =  302
 
-
 =end
 
 class Trinary
@@ -35,7 +34,7 @@ class Trinary
 
   def to_decimal
     number.digits.map.with_index do |num, ind|
-      num * (3 ** ind)
+      num * (3**ind)
     end.sum
   end
 end

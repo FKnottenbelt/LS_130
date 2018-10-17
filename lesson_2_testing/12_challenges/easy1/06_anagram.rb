@@ -10,7 +10,6 @@ containing "inlets". Please read the test suite for exact rules of
 anagrams.
 =end
 
-
 =begin
 i: word and list of words
 p: match word to anagrams in list of words
@@ -38,21 +37,20 @@ class Anagram
     anagrams = []
     possible_anagrams.each do |candidate|
       next if candidate.downcase == word
-      anagrams << candidate if is_anagram?(candidate.downcase)
+      anagrams << candidate if anagram?(candidate.downcase)
     end
     anagrams
   end
 
   private
 
-  def is_anagram?(candidate)
+  def anagram?(candidate)
     candidate.chars.sort == word.chars.sort
   end
 end
 
 # detector = Anagram.new('listen')
 # p detector.match(%w(enlist google inlets banana))
-
 
 # top solutions
 class Anagram

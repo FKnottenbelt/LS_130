@@ -44,10 +44,8 @@ class PigLatin
     end.join(' ')
   end
 
-  private
-
   def self.transform(word)
-    return word + 'ay'  if word =~ /\b([aeiou]|xr|yt)/
+    return word + 'ay' if word =~ /\b([aeiou]|xr|yt)/
     return word.chars.rotate(3).join + 'ay' if word =~ /\b(sch|thr|[^eaiou]qu)/
     return word.chars.rotate(2).join + 'ay' if word =~ /\b(ch|th|qu)/
     return word.chars.rotate(1).join + 'ay' if word =~ /\b[^aeiou]/
@@ -80,4 +78,3 @@ class PigLatin
     [consonant_split[1], consonant_split[2]]
   end
 end
-

@@ -43,7 +43,6 @@ pos prime = 2
  4 % 2 == 0 ? mark : skip
  5 % 2 == 0 ? mark : skip
 =end
-require 'pry'
 
 class Sieve
   attr_reader :number
@@ -59,7 +58,7 @@ class Sieve
       break if counter > number
       prime_nums.map! do |number|
         if number % counter == 0 && number != counter
-          number = 'x'
+          'x'
         else
           number
         end

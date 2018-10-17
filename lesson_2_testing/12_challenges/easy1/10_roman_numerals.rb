@@ -47,9 +47,9 @@ See also: http://www.novaroma.org/via_romana/numbers.html
 require 'pry'
 
 class Integer
-  NUMERALS = { 'M' => 1000, 'CM' => 900, 'D' =>  500, 'CD' => 400,
-               'C' =>  100, 'XC' => 90 , 'L' =>  50, 'XL' => 40,
-               'X' => 10, 'IX' => 9, 'V' =>  5, 'IV' => 4, 'I' =>  1 }
+  NUMERALS = { 'M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400,
+               'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40,
+               'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1 }
 
   def to_roman
     int = self
@@ -57,13 +57,10 @@ class Integer
     NUMERALS.each do |k, v|
       division = int / v
       output <<  k * division
-      int = int - (v * division) if division > 0
+      int -= (v * division) if division > 0
     end
     output
   end
 end
 
-
-#p 1024.to_roman # 'MXXIV'
-
-
+# p 1024.to_roman # 'MXXIV'
