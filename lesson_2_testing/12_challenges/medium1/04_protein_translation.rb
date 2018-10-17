@@ -49,46 +49,61 @@ r: rna to codons => slices of 3 chars
    if invalid strand raise InvalidCodonError
 
 d: to hold strand-into-codons : array
-   codon -> protein: hash or regex?
+   codon -> protein: hash
 
 a: rna strands into codons:
    slice strand into 3 character codons (strand_to_colon)
    for each codons,
      raise InvalidColonError if invalid colon
      look up the protein  (of_codon)
-     add protein to array
+     stop once you encounter a STOP
+     add protein to array if not a STOP
    output array
 
    codon into protein (of_codon)
-
+   select the entries that include our codon
+   take the first key(protein) in the selection
 
 =end
 
-class TranslationTest
+class InvalidCodonError < StandardError; end
+
+class Translation
+  AMINO_ACIDS = { Methionine: 'AUG',
+                  Phenylalanine: ['UUU', 'UUC'],
+                  Leucine: ['UUA', 'UUG'],
+                  Serine: ['UCU', 'UCC', 'UCA', 'UCG'],
+                  Tyrosine: ['UAU', 'UAC'],
+                  Cysteine: ['UGU', 'UGC'],
+                  Tryptophan: 'UGG',
+                  STOP: ['UAA', 'UAG', 'UGA'] }
+
   def self.of_codon(codon)
-    # UUU of zo in, 'Leucine' codons, Serine codons etc uit
-    'protein'
+    AMINO_ACIDS.select do |_, codons|
+      codons.include?(codon)
+    end.keys.first.to_s
   end
 
   def self.of_rna(strand)
-    # strand 'AUGUUUUGG' in , protein Methionine etc uit
     codons = strand_to_colon(strand)
-    codons.each.with_object([]) do |codon, proteins|
-      raise "InvalidCodonError" if !colon.valid?
-      proteins << of_codon(codon)
+    proteins = []
+
+    codons.each do |codon|
+      raise InvalidCodonError if !valid?(codon)
+
+      protein = of_codon(codon)
+      break if protein == 'STOP'
+      proteins << protein
     end
+
+    proteins
   end
 
   def self.strand_to_colon(strand)
-    codons = strand.scan(/[A-Z]{3}/)
+    strand.scan(/[A-Z]{3}/)
   end
 
   def self.valid?(codon)
     !codon.match(/[^ACGU]/)
   end
-
 end
-
-p TranslationTest.of_rna('AUGUUUUGG')
-p TranslationTest.valid?('AUG')
-p TranslationTest.valid?('ZUG')
