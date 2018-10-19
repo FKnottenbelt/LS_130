@@ -597,7 +597,9 @@ end
 # Regular Expressions
 
 # The Coding Challenge
-===
+
+
+===  to order or discard:
 block local variable
 This is a special type of local variable where the scope is
 constrained to the block.
@@ -619,7 +621,9 @@ with chunk_of_code.binding.local_variables
 
 ==
 ===
-
+blocks and procs can both be passed as explicit and implicit arguments.
+When passed as implicit arguments, you use yield to invoke the code. When
+passed as explicit arguments, you use #call.
 
 == Anki voor vb
 
@@ -635,3 +639,29 @@ passes it to the method unchanged.
 
 If the argument passed in is neither a block nor a Proc, Ruby calls
 #to_proc on the object and passes the result to the method.
+
+> from the forum:
+
+    Closures are not formally defined in the Ruby documentation.
+    Thus, you may see some conflicts between what we describe and
+    what other sites say. Stick with what we say here in 130 and 139,
+    and you should be fine when it counts.
+
+    In Ruby, there are two main forms of closures: procs and lambas.
+    For our purposes here at LS, we're can treat blocks as being
+    equivalent to anonymous (unnamed) procs, so blocks are also
+    closures.
+
+    For our purposes, blocks, procs, and lambdas are all the ways
+    that Ruby forms closures.
+
+    Blocks are the most common way Ruby developers deal with closures.
+
+    In the summary, we say that methods can sometimes be closures. In
+    a sense, that's true, but it's not worth bringing up in this
+    course, so we're going to delete that.
+
+    Closures do not have to be assigned to a variable (a block is not
+    assigned to a variable).
+
+    Blocks are not objects.
