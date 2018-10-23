@@ -118,9 +118,11 @@ my_method { |num| num.even? }
 # => "the block should return true: true"
 ```
 But unlike normal methods, it won't complain about wrong number of
-arguments passed to it.
+arguments passed to it. 9The rules around enforcing the number of arguments you can call
+on a closure in Ruby is called its `arity`)
+
 ```ruby
-def my_method
+def my_methods
   if block_given?
     result = yield(4, 3, 7, 11, 13)   # ignoring extra arguments
     puts "the block should still return true: #{result}"
@@ -287,9 +289,13 @@ making an implicit block a proc with Proc.new?
 
 ## Arguments and return values with blocks
 to many, to little arguments > see 'how blocks work'
-splat operators and block arguments
 return values > see 'how blocks work'
 
+splat operators and block arguments:
+~/130/lesson_2_testing/09_more_topics/easy2/10_each_cons2.rb
+~/130/lesson_2_testing/09_more_topics/medium1/04_passing_parameters2.rb
+~/130/lesson_2_testing/09_more_topics/medium1/05_passing_parameter3.rb
+~/130/lesson_2_testing/09_more_topics/medium1/06_method_to_proc.rb
 
 ## When can you pass a block to a method
 eh.. always?
@@ -385,8 +391,8 @@ There there are usually 4 steps to writing a test. We call this the
 - **S**et up the necessary objects.
 - **E**xecute the code against the object we're testing.
 - **A**ssert the results of the execution.
-- **T**Tear down and clean up any lingering artifacts
--
+- **T**ear down and clean up any lingering artifacts
+
 ```ruby
 class TextTest < MiniTest::Test
   def setup                            # <= Setup
@@ -630,6 +636,13 @@ If the argument passed in is neither a block nor a Proc, Ruby calls
     assigned to a variable).
 
     Blocks are not objects.
+
+# Arity
+The rules around enforcing the number of arguments you can call
+on a closure in Ruby is called its `arity`. In Ruby, blocks have lenient
+arity rules, which is why it doesn't complain when you pass in different
+number of arguments. Lambdas have strict arity rules: they require the exact
+number of expected arguments to be supplied.
 
 # Regular Expressions
 

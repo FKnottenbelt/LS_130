@@ -110,5 +110,8 @@ This exercise would be pretty hard if you hadn't already done the bulk of the wo
 
 As before, you need to know when to stop iterating. This can be handled pretty easily by realizing that the previous exercise just had n == 2, and we stopped processing when index + 1, or index + 2 - 1 was greater than or equal to the Array size. This translates pretty naturally to testing whether index + n - 1 is greater than or equal to the Array size.
 
-Slightly trickier is passing a variable number of elements to the block; we do this using the "splat" operator (*) together with a slice of the array that covers n elements starting at the current index.
+Slightly trickier is passing a variable number of elements to
+the block; we do this using the "splat" operator (*) together
+with a slice of the array that covers n elements starting at
+the current index.
 =end
