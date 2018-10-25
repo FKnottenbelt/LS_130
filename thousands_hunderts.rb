@@ -1,4 +1,6 @@
 ###
+# get all the (number of) thousands, hunderts etc
+#
 class Integer
   NUMERALS = { 'M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400,
                'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40,
@@ -48,28 +50,32 @@ division = 0 / 1 = 0
 => output is 'MXXIV'
 
 ####
+# get all the thousands, hunderts etc
+# simplified, only need every number once
+# so per digit but not the value of the digit
+#
 class SecretHandshake
 
   COMMANDS =
-    {
-      1 => 'wink',
-      10 => 'double blink',
+    { 1000 => 'jump',
       100 => 'close your eyes',
-      1000 => 'jump'
+      10 => 'double blink',
+      1 => 'wink'
     }
 
   def commands(num)
     number = num
-    COMMANDS.keys.reverse_each do |place| # reverse: start at 1000
-      next if number < place
-      number -= place
-      commands_list << COMMANDS[place]
-    end
-  end
+    commands_list = []
 
+    COMMANDS.each_key do |wink|
+      next if number < wink
+      number -= wink
+      commands_list << COMMANDS[wink]
+    end
+    commands_list
+  end
 end
 
 s = SecretHandshake.new
 s.commands(20)
-
 
