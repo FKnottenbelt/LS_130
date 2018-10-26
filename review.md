@@ -81,7 +81,7 @@ Pete hanson: With blocks, test that your blocks are being invoked when
 they should be, and that the return values are being used the way you
 intend.
 
-# HEREDOC (?)
+# HEREDOC
 squiggly heredoc to remove preceding spaces ?
 
 # rubocop

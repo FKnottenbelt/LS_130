@@ -16,7 +16,8 @@ methods, objects, etc) in the outer scope at the moment of the definition
 of the closure. We call this the `binding` of the closure.
 So the scope of a closure is contained in its `binding` and that is
 everything that the block of code can access that is defined somewhere
-other than the block.
+other than the block. NB: the closure creates a binding at point of definition,
+not at the point of execution.
 
 We can see this in action when looking at the following code:
 ```ruby
@@ -301,8 +302,17 @@ splat operators and block arguments:
 eh.. always?
 
 In Ruby, every method can take an optional block as an implicit
-parameter. You can just tack it on at the end of the method invocation.
-
+parameter. You can just tack it on at the end of the method invocation:
+```ruby
+puts("my message") do
+  puts "this will not be excecuted"
+end
+```
+Here the puts method is called and passed two arguments: a string
+`my message` and a block `{ puts "this will not be excecuted" }`.
+The puts method outputs a string represention of passed in
+string 'my message'. It then ignores the implicitly passed in
+block and returns nil.
 ## &:symbol
 
 A lone & applied to an object causes ruby to try to convert the object to
