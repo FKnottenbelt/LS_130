@@ -397,7 +397,7 @@ end
 
 ## SEAT approach
 There there are usually 4 steps to writing a test. We call this the
-`SEAT` approacg:
+`SEAT` approach:
 - **S**et up the necessary objects.
 - **E**xecute the code against the object we're testing.
 - **A**ssert the results of the execution.
@@ -524,8 +524,7 @@ version of Ruby and then use the proper version in your app.
 
 #### Gemfiles
 To use Bundler, you provide a file named Gemfile that describes
-the Ruby and Gem versions you want for your app. You use a DSL
-described on the Bundler website to provide this information.
+the Ruby and Gem versions you want to use.
 
 example of Gemfile:
 ```
@@ -541,9 +540,9 @@ gem 'rake', '~>10.4.0'
 Bundler uses the Gemfile to generate a Gemfile.lock file via the
 bundle install command. Gemfile.lock describes the actual versions
 of each Gem that your app needs, including any Gems that the Gems
-listed in Gemfile depend on. The bundler/setup package tells your
-Ruby program to use Gemfile.lock to determine which Gem versions
-it should load.
+listed in Gemfile depend on. You need to put `require 'bundler/setup`
+at the beginning of your application to tell your Ruby program to use
+Gemfile.lock to determine which Gem versions it should load.
 
 example of Gemfile.lock:
 ```
@@ -609,6 +608,10 @@ task :find_file do
   end
 end
 ```
+A basic task will consist of the discription of the task named with a symbol
+(`task :taskname`), a desc statement that attaches a description to the
+task (`des 'what this task does'`) and a `block` that has the code that the
+task will execute
 
 > How does ruby pass blocks that are passed in?
 
