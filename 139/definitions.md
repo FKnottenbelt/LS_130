@@ -335,7 +335,6 @@ is the 'shortform' for:
 [1, 2, 3, 4, 5].map { |nun| num.to_s }
 ```
 
-
 # Testing With Minitest
 
 ## Testing terminology
@@ -660,34 +659,3 @@ number of expected arguments to be supplied.
 # Regular Expressions
 
 # The Coding Challenge
-
-
-===  to order or discard:
-block local variable
-This is a special type of local variable where the scope is
-constrained to the block.
-
-The binding is everything that the block of code can access that is
-defined somewhere other than the block.
-
-The binding is actually an object of type Binding.
-https://ruby-doc.org/core/Binding.html, but that's an implementation
-detail. In more general terms, it's just the everything the block of
-code can access without having to define it locally.
-
-
-find all the in scope bindings for a block (binding object)
-with chunk_of_code.binding.local_variables
-
-? see anki: concepts: explain local variable scope and blocks ?
-
-==
-===
-blocks and procs can both be passed as explicit and implicit arguments.
-When passed as implicit arguments, you use yield to invoke the code. When
-passed as explicit arguments, you use #call.
-
-== Anki voor vb
-
-==
-
