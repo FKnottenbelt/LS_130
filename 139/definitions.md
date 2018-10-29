@@ -332,7 +332,7 @@ Thus this code
 ```
 is the 'shortform' for:
 ```
-[1, 2, 3, 4, 5].map { |nun| num.to_s }
+[1, 2, 3, 4, 5].map { |num| num.to_s }
 ```
 
 # Testing With Minitest
